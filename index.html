@@ -2,18 +2,18 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Mercado Online</title>
+<title>Mercado Online Avançado</title>
 
 <style>
     body {
         margin: 0;
-        height: 100vh;
-        font-family: 'Arial', sans-serif;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        font-family: Arial, sans-serif;
         background-color: #f0f0f0;
         transition: background-color 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
     }
 
     #mercado {
@@ -22,12 +22,26 @@
         padding: 30px 50px;
         border-radius: 15px;
         box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        width: 90%;
+        max-width: 400px;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        color: #333;
     }
 
     label {
-        display: block;
+        display: flex;
+        justify-content: space-between;
         margin: 10px 0;
-        font-size: 20px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+        transform: scale(1.3);
+        cursor: pointer;
     }
 
     button {
@@ -39,17 +53,47 @@
         border: none;
         border-radius: 10px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.2s;
     }
 
     button:hover {
         background-color: #218838;
+        transform: scale(1.05);
     }
 
     #total {
-        margin-top: 20px;
-        font-size: 24px;
+        margin-top: 15px;
+        font-size: 22px;
         color: #555;
+    }
+
+    #contador {
+        margin-top: 10px;
+        font-size: 18px;
+        color: #777;
+    }
+
+    @media (max-width: 500px) {
+        #mercado {
+            padding: 20px 25px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        label {
+            font-size: 16px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 8px 20px;
+        }
+
+        #total {
+            font-size: 20px;
+        }
     }
 </style>
 </head>
@@ -59,13 +103,14 @@
 <div id="mercado">
     <h1>Mercado Online</h1>
 
-    <label><input type="checkbox" value="Leite"> Leite (R$ 4,99)</label>
-    <label><input type="checkbox" value="Arroz"> Arroz (R$ 17,99)</label>
-    <label><input type="checkbox" value="Ovos"> Ovos (R$ 7,99)</label>
-    <label><input type="checkbox" value="Café"> Café (R$ 23,99)</label>
+    <label><span>Leite (R$ 4,99)</span><input type="checkbox" value="Leite"></label>
+    <label><span>Arroz (R$ 17,99)</span><input type="checkbox" value="Arroz"></label>
+    <label><span>Ovos (R$ 7,99)</span><input type="checkbox" value="Ovos"></label>
+    <label><span>Café (R$ 23,99)</span><input type="checkbox" value="Café"></label>
 
     <button onclick="finalizar()">Finalizar Compra</button>
 
+    <div id="contador">Produtos selecionados: 0</div>
     <h2 id="total"></h2>
 </div>
 
@@ -77,6 +122,17 @@ const produtos = {
     "Café": 23.99
 };
 
+// Atualiza o contador de produtos selecionados
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+        const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
+        document.getElementById("contador").innerText = `Produtos selecionados: ${selecionados.length}`;
+        document.body.style.backgroundColor = selecionados.length > 0 ? "#d4edda" : "#f0f0f0";
+    });
+});
+
+// Calcula o total e mostra
 function finalizar() {
     let total = 0;
     const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
@@ -88,7 +144,10 @@ function finalizar() {
     document.getElementById("total").innerText =
         `Total da compra: R$ ${total.toFixed(2)}`;
 
-    document.body.style.backgroundColor = selecionados.length > 0 ? "#d4edda" : "#f0f0f0";
+    // Feedback visual no fundo
+    if (selecionados.length > 0) {
+        document.body.style.backgroundColor = "#c3e6cb";
+    }
 }
 </script>
 
