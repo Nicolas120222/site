@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Mercado Online</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: 'Arial', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f0f0;
+        transition: background-color 0.5s;
+    }
+
+    #ola {
+        font-size: 60px;
+        color: #333;
+        animation: pulse 1s infinite alternate;
+    }
+
+    #mercado {
+        display: none;
+        text-align: center;
+        background-color: #fff;
+        padding: 30px 50px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+
+    label {
+        display: block;
+        margin: 10px 0;
+        font-size: 20px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 25px;
+        font-size: 18px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+
+    #total {
+        margin-top: 20px;
+        font-size: 24px;
+        color: #555;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); color: #333; }
+        100% { transform: scale(1.1); color: #555; }
+    }
+</style>
+</head>
+
+<body>
+
+<div id="ola">olá</div>
+
+<div id="mercado">
+    <h1>Mercado Online</h1>
+
+    <label><input type="checkbox" value="Leite"> Leite (R$ 4,99)</label>
+    <label><input type="checkbox" value="Arroz"> Arroz (R$ 17,99)</label>
+    <label><input type="checkbox" value="Ovos"> Ovos (R$ 7,99)</label>
+    <label><input type="checkbox" value="Café"> Café (R$ 23,99)</label>
+
+    <button onclick="finalizar()">Finalizar Compra</button>
+
+    <h2 id="total"></h2>
+</div>
+
+<script>
+const produtos = {
+    "Leite": 4.99,
+    "Arroz": 17.99,
+    "Ovos": 7.99,
+    "Café": 23.99
+};
+
+// Mostrar o mercado após 5 segundos com fade
+setTimeout(() => {
+    const ola = document.getElementById("ola");
+    const mercado = document.getElementById("mercado");
+
+    ola.style.transition = "opacity 1s";
+    ola.style.opacity = 0;
+
+    setTimeout(() => {
+        ola.style.display = "none";
+        mercado.style.display = "block";
+        mercado.style.opacity = 0;
+        mercado.style.transition = "opacity 1s";
+        setTimeout(() => mercado.style.opacity = 1, 50);
+    }, 1000);
+}, 5000);
+
+function finalizar() {
+    let total = 0;
+    const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
+
+    selecionados.forEach(item => {
+        total += produtos[item.value];
+    });
+
+    document.getElementById("total").innerText =
+        `Total da compra: R$ ${total.toFixed(2)}`;
+
+    // Mudar background para verde claro se houver produtos selecionados
+    document.body.style.backgroundColor = selecionados.length > 0 ? "#d4edda" : "#f0f0f0";
+}
+</script>
+
+</body>
+</html>
