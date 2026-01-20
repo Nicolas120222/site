@@ -16,14 +16,7 @@
         transition: background-color 0.5s;
     }
 
-    #ola {
-        font-size: 60px;
-        color: #333;
-        animation: pulse 1s infinite alternate;
-    }
-
     #mercado {
-        display: none;
         text-align: center;
         background-color: #fff;
         padding: 30px 50px;
@@ -58,17 +51,10 @@
         font-size: 24px;
         color: #555;
     }
-
-    @keyframes pulse {
-        0% { transform: scale(1); color: #333; }
-        100% { transform: scale(1.1); color: #555; }
-    }
 </style>
 </head>
 
 <body>
-
-<div id="ola">olá</div>
 
 <div id="mercado">
     <h1>Mercado Online</h1>
@@ -91,23 +77,6 @@ const produtos = {
     "Café": 23.99
 };
 
-// Mostrar o mercado após 5 segundos com fade
-setTimeout(() => {
-    const ola = document.getElementById("ola");
-    const mercado = document.getElementById("mercado");
-
-    ola.style.transition = "opacity 1s";
-    ola.style.opacity = 0;
-
-    setTimeout(() => {
-        ola.style.display = "none";
-        mercado.style.display = "block";
-        mercado.style.opacity = 0;
-        mercado.style.transition = "opacity 1s";
-        setTimeout(() => mercado.style.opacity = 1, 50);
-    }, 1000);
-}, 5000);
-
 function finalizar() {
     let total = 0;
     const selecionados = document.querySelectorAll('input[type="checkbox"]:checked');
@@ -119,11 +88,9 @@ function finalizar() {
     document.getElementById("total").innerText =
         `Total da compra: R$ ${total.toFixed(2)}`;
 
-    // Mudar background para verde claro se houver produtos selecionados
     document.body.style.backgroundColor = selecionados.length > 0 ? "#d4edda" : "#f0f0f0";
 }
 </script>
 
 </body>
 </html>
-
